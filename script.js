@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Mock app data
     const mockApps = [
-        { title: "App 1", body: "Description for App 1" },
-        { title: "App 2", body: "Description for App 2" },
-        { title: "App 3", body: "Description for App 3" }
+        { title: "App 1", body: "Description for App 1", mediafireLink: "YOUR_MEDIAFIRE_LINK_APP_1" },
+        { title: "App 2", body: "Description for App 2", mediafireLink: "YOUR_MEDIAFIRE_LINK_APP_2" },
+        { title: "App 3", body: "Description for App 3", mediafireLink: "YOUR_MEDIAFIRE_LINK_APP_3" }
     ];
 
     // Iterate through mock app data and display
@@ -20,21 +20,24 @@ document.addEventListener("DOMContentLoaded", function () {
         description.textContent = app.body;
         description.classList.add("description");
 
-        const downloadLink = document.createElement("a");
-        downloadLink.textContent = "Download";
-        downloadLink.href = `./apps/${app.title}/${app.title}.zip`; // Construct the path dynamically
-        downloadLink.classList.add("download-btn");
-        downloadLink.setAttribute("download", `${app.title}.zip`);
+        const downloadButton = document.createElement("button");
+        downloadButton.textContent = "Download from MediaFire";
+        downloadButton.classList.add("download-btn");
 
-        // Toggle visibility of description and download link on app name click
+        // Add event listener to the download button
+        downloadButton.addEventListener("click", () => {
+            window.open(app.mediafireLink, "_blank"); // Open the MediaFire link in a new tab
+        });
+
+        // Toggle visibility of description on app name click
         title.addEventListener("click", () => {
             description.style.display = description.style.display === "block" ? "none" : "block";
-            downloadLink.style.display = downloadLink.style.display === "block" ? "none" : "block";
+            downloadButton.style.display = downloadButton.style.display === "block" ? "none" : "block";
         });
 
         appElement.appendChild(title);
         appElement.appendChild(description);
-        appElement.appendChild(downloadLink);
+        appElement.appendChild(downloadButton);
 
         appList.appendChild(appElement);
     });
